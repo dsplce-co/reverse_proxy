@@ -1,0 +1,9 @@
+[ v3_end ]
+basicConstraints = CA:false
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment
+authorityKeyIdentifier = keyid:always,issuer:always
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = dev.local
+DNS.2 = localhost

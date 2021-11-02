@@ -33,8 +33,8 @@ async fn main() {
     // serve it over TLS
     warp::serve(app)
         .tls()
-        .cert_path("tls/ecdsa/client.fullchain")
-        .key_path("tls/ecdsa/client.key")
+        .cert_path("tls/ecdsa/end.fullchain")
+        .key_path("tls/ecdsa/end.key")
         .run(([0, 0, 0, 0], port))
         .await;
 }
