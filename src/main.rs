@@ -1,25 +1,20 @@
-use std::env;
+use clap::Parser;
 use hyper::StatusCode;
 use warp::{Filter, Rejection, Reply};
 use warp_reverse_proxy::reverse_proxy_filter;
 
+#[derive(Parser, Debug)]
+#[clap(version, about, long_about = None)]
+struct Args {
+    #[clap(short, long, default_value = "http://127.0.0.1:8080/")]
+    backend: String,
+    #[clap(short, long, default_value_t = 4343)]
+    port: u16,
+}
+
 #[tokio::main]
 async fn main() {
-    // defaults
-    let mut backend = "http://127.0.0.1:8080/".to_string();
-    let mut port = 4343;
-
-    // pass backend URL as a command line argument
-    if let Some(arg) = env::args().skip(1).next() {
-        backend = arg;
-    }
-
-    // check the PORT env var
-    if let Ok(env_str) = env::var("PORT") {
-        if let Ok(new_port) = env_str.parse::<u16>() {
-            port = new_port;
-        }
-    }
+    let Args { backend, port } = Args::parse();
 
     println!("Backend: {backend}");
     println!("Listening on port {port}");
