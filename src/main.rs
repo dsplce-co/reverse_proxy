@@ -21,8 +21,8 @@ async fn main() {
         }
     }
 
-    println!("Backend: {}", backend);
-    println!("Listening on port {}", port);
+    println!("Backend: {backend}");
+    println!("Listening on port {port}");
 
     // construct the reverse proxy
     let app = reverse_proxy_filter(
@@ -40,7 +40,7 @@ async fn main() {
 }
 
 async fn bad_gateway(err: Rejection) -> Result<impl Reply, Rejection> {
-    eprintln!("502: {:?}", err);
+    eprintln!("502: {err:?}");
     let status = StatusCode::BAD_GATEWAY;
     Ok(warp::reply::with_status("couldn't connect upstream", status))
 }
